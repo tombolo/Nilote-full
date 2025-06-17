@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
@@ -21,12 +20,12 @@ const BinaryRoutes = observer((props: TBinaryRoutes) => {
                 </div>
             }
         >
-            <Routes>
-                <Route path="/" element={<Navigate to="/bot" replace />} />
+            <Switch>
+                <Route exact path="/" render={() => <Redirect to="/bot" />} />
                 {getRoutesConfig().map((route: TRoute, idx: number) => (
                     <RouteWithSubRoutes key={`${idx}_${current_language}`} {...route} {...props} />
                 ))}
-            </Routes>
+            </Switch>
         </React.Suspense>
     );
 });
