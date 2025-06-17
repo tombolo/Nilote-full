@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { routes } from '@deriv/shared';
 import classNames from 'classnames';
 import { updateWorkspaceName } from '@deriv/bot-skeleton';
 import dbot from '@deriv/bot-skeleton/src/scratch/dbot';
@@ -17,8 +18,18 @@ import Dashboard from '../dashboard';
 import RunStrategy from '../dashboard/run-strategy';
 import Tutorial from '../tutorials';
 import { tour_list } from '../tutorials/dbot-tours/utils';
+import { getPlatformSettings } from '@deriv/shared';
+import Finesttool from '../finesttool';
+import RiskManagementCalculator from '../riskManagementCalculator';
+import Strategy from '../strategy';
+import { FaChartBar, FaChartLine, FaPuzzlePiece, FaChessKnight, FaUsers, FaShieldAlt, FaRobot, FaTachometerAlt } from 'react-icons/fa';
+
 
 const AppWrapper = observer(() => {
+
+
+
+
     const { dashboard, load_modal, run_panel, quick_strategy, summary_card } = useDBotStore();
     const {
         active_tab,
@@ -41,7 +52,8 @@ const AppWrapper = observer(() => {
     const { ui } = useStore();
     const { url_hashed_values, is_desktop } = ui;
 
-    const hash = ['dashboard', 'bot_builder', 'chart', 'tutorial'];
+
+    const hash = ['dashboard', 'bot_builder', 'chart', 'tutorial', 'finesttool', 'trader', 'risk_management_calculator'];
 
     let tab_value: number | string = active_tab;
     const GetHashedValue = (tab: number) => {
@@ -150,25 +162,38 @@ const AppWrapper = observer(() => {
                     <Tabs
                         active_index={active_tab}
                         className='main__tabs'
-                        onTabItemChange={onEntered}
                         onTabItemClick={handleTabChange}
                         top
                     >
                         <div
-                            icon='IcDashboardComponentTab'
-                            label={<Localize i18n_default_text='Dashboard' />}
+
+                            label={
+                                <span style={{ color: '#001f3f', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center' }}>
+                                    <FaTachometerAlt size={14} />
+                                    Dashboard
+                                </span>
+                            }
                             id='id-dbot-dashboard'
                         >
                             <Dashboard handleTabChange={handleTabChange} />
                         </div>
                         <div
-                            icon='IcBotBuilderTabIcon'
-                            label={<Localize i18n_default_text='Bot Builder' />}
+
+                            label={
+                                <span style={{ color: '#001f3f', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center' }}>
+                                    <FaRobot size={14} />
+                                    Bot Builder
+                                </span>
+                            }
                             id='id-bot-builder'
                         />
                         <div
-                            icon='IcChartsTabDbot'
-                            label={<Localize i18n_default_text='Charts' />}
+                            label={
+                                <span style={{ color: '#001f3f', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center' }}>
+                                    <FaChartLine size={14} />
+                                    Charts
+                                </span>
+                            }
                             id={
                                 is_chart_modal_visible || is_trading_view_modal_visible
                                     ? 'id-charts--disabled'
@@ -178,21 +203,70 @@ const AppWrapper = observer(() => {
                             <Chart show_digits_stats={false} />
                         </div>
                         <div
-                            icon='IcTutorialsTabs'
-                            label={<Localize i18n_default_text='Tutorials' />}
+                            label={
+                                <span style={{ color: '#001f3f', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center' }}>
+                                    <FaChessKnight size={14} />
+                                    Tutorials
+                                </span>
+                            }
                             id='id-tutorials'
                         >
                             <div className='tutorials-wrapper'>
                                 <Tutorial handleTabChange={handleTabChange} />
                             </div>
                         </div>
+
+
+                        <div
+                            label={
+                                <span style={{ color: '#001f3f', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center' }}>
+                                    <FaChartBar size={14} />
+                                    Analysis Tool
+                                </span>
+                            }
+                            id='id-dbot-dashboard'
+                        >
+                            <Finesttool />
+                        </div>
+
+
+
+                        <div
+                            label={
+                                <span style={{ color: '#001f3f', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center' }}>
+                                    <FaShieldAlt size={14} />
+                                    Risk Management
+                                </span>
+                            }
+                            id='id-risk-management-calculator'
+                        >
+                            <div className='tutorials-wrapper'>
+                                <RiskManagementCalculator />
+                            </div>
+                        </div>
+
+                        <div
+                            label={
+                                <span style={{ color: '#001f3f', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center' }}>
+                                    <FaChessKnight size={14} />
+                                    Strategy
+                                </span>
+                            }
+                            id='id-strategy'
+                        >
+                            <div className='tutorials-wrapper'>
+                                <Strategy />
+                            </div>
+                        </div>
+
+
                     </Tabs>
                 </div>
             </div>
             {is_desktop ? (
                 <>
                     <div className='main__run-strategy-wrapper'>
-                        {active_tab !== 4 && (
+                        {active_tab !== 5 && (
                             <>
                                 <RunStrategy />
                                 <RunPanel />
