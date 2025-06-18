@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { observer, useStore } from '@deriv/stores';
 import { Localize } from '@deriv/translations';
